@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Picker-Finder</title>
+    <style type="text/css" rel="stylesheet">
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 380px;
+            background-color: hsl(331, 3%, 95%);
+            padding: 1.5em;
+        }
+
+        .list > div {
+            display: flex;
+        }
+
+        .list > div > span {
+            width: 5em;
+            text-align: right;
+            margin-right: 1em;
+            align-self: baseline;
+            padding: .3em 0;
+            text-transform: uppercase;
+        }
+
+        .list ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .list ul li {
+            display: inline-block;
+            border-radius: 1em;
+            background-color: hsl(331, 60%, 75%);
+            margin-bottom: .5em;
+            padding: .3em .8em;
+        }
+
+        .list ul li:not(:last-child) {
+            margin-right: .3em;
+        }
+
+        .input {
+            margin-top: .8em;
+        }
+
+        .input input {
+            width: 100%;
+        }
+
+        .results {
+            background: hsl(331, 10%, 75%);
+            position: absolute;
+            width: calc(100% - 3em);
+        }
+
+        .categories {
+            padding: 1em .5em;
+        }
+
+        .category:not(:last-child) {
+            margin-bottom: 1em;
+        }
+
+        .category > button {
+            width: 100%;
+            text-align: left;
+            font-size: 1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color:hsl(331, 3%, 50%);
+            background: transparent;
+            border: none;
+            padding: 0 .8em;
+            margin-bottom: .5em;
+        }
+
+        .category > button > span {
+            padding-right: 1em;
+        }
+
+        .toggle-content {
+            /* margin-bottom: .5em; */
+        }
+
+        .toggle-content ul {
+            margin: 0;
+            padding: 0 2em;
+            list-style: none;
+        }
+
+        .add-btn {
+            width: 100%;
+            background:hsl(331, 30%, 50%);
+            border: none;
+            font-size: 1em;
+            padding: .5em;
+            color: hsl(331, 3%, 95%);
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="wrapper">
+        <!-- List -->
+        <div class="list">
+            <div>
+                <span>music:</span>
+                <ul>
+                    <li>triangle</li>
+                    <li>bass</li>
+                    <li>guitar</li>
+                </ul>
+            </div>
+            <div>
+                <span>dancing:</span>
+                <ul>
+                    <li>contemporary</li>
+                </ul>
+            </div>
+            <div>
+                <span>acting:</span>
+                <ul>
+                    <li>drama</li>
+                    <li>comedy</li>
+                </ul>
+            </div>
+        </div>
+        <!-- End List -->
+        <!-- Inuput -->
+        <div class="input">
+            <input type="text">
+            <span id="input-icon"></span>
+        </div>
+        <!-- End Input -->
+        <!-- Results -->
+        <div class="results">
+            <div class="categories">
+                <div class="category">
+                    <button class="toggle-btn"><span>▼</span> Music</button>
+                    <div class="toggle-content">
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="triangle" name="triangle">
+                                <label for="triangle">triangle</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="harmonica" name="harmonica">
+                                <label for="harmonica">harmonica</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="guitar" name="guitar">
+                                <label for="guitar">guitar</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="vocals" name="vocals">
+                                <label for="vocals">vocals</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="bass" name="bass">
+                                <label for="bass">bass</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category">
+                    <button class="toggle-btn"><span>▼</span> Dancing</button>
+                    <div class="toggle-content">
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="salsa" name="salsa">
+                                <label for="salsa">salsa</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="tango" name="tango">
+                                <label for="tango">tango</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="waltz" name="waltz">
+                                <label for="waltz">waltz</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="tap-dance" name="tap-dance">
+                                <label for="tap-dance">tap dance</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="cha-cha" name="cha-cha">
+                                <label for="cha-cha">cha cha</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="contemporary" name="contemporary">
+                                <label for="contemporary">contemporary</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="jazz-dance" name="jazz-dance">
+                                <label for="jazz-dance">jazz dance</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="category">
+                    <button class="toggle-btn"><span>▼</span> Acting</button>
+                    <div class="toggle-content">
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="comedy" name="comedy">
+                                <label for="comedy">comedy</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="drama" name="drama">
+                                <label for="drama">drama</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="action" name="action">
+                                <label for="action">action</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="thriller" name="thriller">
+                                <label for="thriller">thriller</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="add-btn">Add new +</button>
+        </div>
+        <!-- End Results -->
+    </div>
+
+</body>
+</html>
