@@ -32,7 +32,6 @@ for(let item of skillsListData.acting) {
 // Show / Hide Results
 let toggleWrapper = document.querySelector('.toggle-wrapper');
 let results = document.querySelector('.results');
-// let input = document.querySelector('.input');
 
 toggleWrapper.addEventListener('focusin', showResults);
 document.addEventListener('click', hideResults);
@@ -104,5 +103,22 @@ if (skillsListData.acting.length) {
         listItem.appendChild(listItemInput);
         listItem.appendChild(listItemLabel);
         actingSkillsList.appendChild(listItem);
+    });
+}
+
+// Show / Hide category in results
+let categoryBtns = document.getElementsByClassName('toggle-btn');
+
+for(let button of categoryBtns) {
+    button.addEventListener('click', function() {
+        // this.classList.toggle('active');
+        let arrow = this.querySelector('span');
+        toggleContent = this.nextElementSibling;
+        toggleContent.classList.toggle('hidden');
+        if(toggleContent.classList.contains('hidden')) {
+            arrow.innerText = '▶';
+        } else {
+            arrow.innerText = '▼';
+        }
     });
 }

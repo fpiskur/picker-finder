@@ -86,6 +86,12 @@ button {
     margin-bottom: .5em;
 }
 
+.category > button:hover,
+.category > button:active,
+.category > button:focus {
+    color: hsl(331, 3%, 30%);
+}
+
 .category > button > span {
     padding-right: 1em;
 }
@@ -112,4 +118,8 @@ button {
     font-size: 1em;
     padding: .5em;
     color: hsl(331, 3%, 95%);
+}
+
+.hidden {
+    display: none;
 }
