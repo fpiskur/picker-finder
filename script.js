@@ -4,9 +4,13 @@ let skillsListData = {
     acting: ['action', 'comedy', 'drama']
 };
 
-// let chosenSkills = [];
+let chosenSkills = {
+    music: [],
+    dancing: [],
+    acting: []
+};
 
-// Populate skills list
+// Populate chosen skills list
 let musicList = document.querySelector('.music-list');
 let dancingList = document.querySelector('.dancing-list');
 let actingList = document.querySelector('.acting-list');
@@ -29,6 +33,25 @@ for(let item of skillsListData.acting) {
     actingList.appendChild(listItem);
 }
 
+// Search / Add skill
+let filteredSkillsList = {
+    music: [...skillsListData.music],
+    dancing: [...skillsListData.dancing],
+    acting: [...skillsListData.acting]
+};
+
+let input = document.querySelector('.input');
+input.addEventListener('input', updateSkills);
+
+function updateSkills(event) {
+    filteredSkillsList = {};
+    for(let category in skillsListData) {
+        let filteredCategory = skillsListData[category].filter(skill => skill.toLowerCase().includes(event.target.value.toLowerCase()));
+        filteredSkillsList = { ...filteredSkillsList, [category]: filteredCategory }
+    }
+    populateResults();
+}
+
 // Show / Hide Results
 let toggleWrapper = document.querySelector('.toggle-wrapper');
 let results = document.querySelector('.results');
@@ -47,63 +70,79 @@ function hideResults(event) {
 }
 
 // Populate skills in results
-let musicBtn = document.getElementById('music-cat-btn');
-let dancingBtn = document.getElementById('dancing-cat-btn');
-let actingBtn = document.getElementById('acting-cat-btn');
+// let musicBtn = document.getElementById('music-cat-btn');
+// let dancingBtn = document.getElementById('dancing-cat-btn');
+// let actingBtn = document.getElementById('acting-cat-btn');
 
 let musicSkillsList = document.querySelector('.music-skills-list');
 let dancingSkillsList = document.querySelector('.dancing-skills-list');
 let actingSkillsList = document.querySelector('.acting-skills-list');
 
-if (skillsListData.music.length) {
-    skillsListData.music.forEach(skill => {
-        let listItem = document.createElement('li');
-        let listItemInput = document.createElement('input');
-        listItemInput.type = 'checkbox';
-        let listItemLabel = document.createElement('label');
+populateResults();
 
-        listItemInput.id = skill;
-        listItemInput.name = skill;
-        listItemLabel.htmlFor = skill;
-        listItemLabel.innerText = ' ' + skill;
-        listItem.appendChild(listItemInput);
-        listItem.appendChild(listItemLabel);
-        musicSkillsList.appendChild(listItem);
-    });
-}
+function populateResults() {
+    // Clear lists
+    while(musicSkillsList.firstChild) {
+        musicSkillsList.removeChild(musicSkillsList.lastChild);
+    }
+    while(dancingSkillsList.firstChild) {
+        dancingSkillsList.removeChild(dancingSkillsList.lastChild);
+    }
+    while(actingSkillsList.firstChild) {
+        actingSkillsList.removeChild(actingSkillsList.lastChild);
+    }
 
-if (skillsListData.dancing.length) {
-    skillsListData.dancing.forEach(skill => {
-        let listItem = document.createElement('li');
-        let listItemInput = document.createElement('input');
-        listItemInput.type = 'checkbox';
-        let listItemLabel = document.createElement('label');
-
-        listItemInput.id = skill;
-        listItemInput.name = skill;
-        listItemLabel.htmlFor = skill;
-        listItemLabel.innerText = ' ' + skill;
-        listItem.appendChild(listItemInput);
-        listItem.appendChild(listItemLabel);
-        dancingSkillsList.appendChild(listItem);
-    });
-}
-
-if (skillsListData.acting.length) {
-    skillsListData.acting.forEach(skill => {
-        let listItem = document.createElement('li');
-        let listItemInput = document.createElement('input');
-        listItemInput.type = 'checkbox';
-        let listItemLabel = document.createElement('label');
-
-        listItemInput.id = skill;
-        listItemInput.name = skill;
-        listItemLabel.htmlFor = skill;
-        listItemLabel.innerText = ' ' + skill;
-        listItem.appendChild(listItemInput);
-        listItem.appendChild(listItemLabel);
-        actingSkillsList.appendChild(listItem);
-    });
+    // Create and append elements
+    if (filteredSkillsList.music.length) {
+        filteredSkillsList.music.forEach(skill => {
+            let listItem = document.createElement('li');
+            let listItemInput = document.createElement('input');
+            listItemInput.type = 'checkbox';
+            let listItemLabel = document.createElement('label');
+    
+            listItemInput.id = skill;
+            listItemInput.name = skill;
+            listItemLabel.htmlFor = skill;
+            listItemLabel.innerText = ' ' + skill;
+            listItem.appendChild(listItemInput);
+            listItem.appendChild(listItemLabel);
+            musicSkillsList.appendChild(listItem);
+        });
+    }
+    
+    if (filteredSkillsList.dancing.length) {
+        filteredSkillsList.dancing.forEach(skill => {
+            let listItem = document.createElement('li');
+            let listItemInput = document.createElement('input');
+            listItemInput.type = 'checkbox';
+            let listItemLabel = document.createElement('label');
+    
+            listItemInput.id = skill;
+            listItemInput.name = skill;
+            listItemLabel.htmlFor = skill;
+            listItemLabel.innerText = ' ' + skill;
+            listItem.appendChild(listItemInput);
+            listItem.appendChild(listItemLabel);
+            dancingSkillsList.appendChild(listItem);
+        });
+    }
+    
+    if (filteredSkillsList.acting.length) {
+        filteredSkillsList.acting.forEach(skill => {
+            let listItem = document.createElement('li');
+            let listItemInput = document.createElement('input');
+            listItemInput.type = 'checkbox';
+            let listItemLabel = document.createElement('label');
+    
+            listItemInput.id = skill;
+            listItemInput.name = skill;
+            listItemLabel.htmlFor = skill;
+            listItemLabel.innerText = ' ' + skill;
+            listItem.appendChild(listItemInput);
+            listItem.appendChild(listItemLabel);
+            actingSkillsList.appendChild(listItem);
+        });
+    }
 }
 
 // Show / Hide category in results
