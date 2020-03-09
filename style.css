@@ -58,6 +58,10 @@ button {
     width: 100%;
 }
 
+small {
+    color: hsl(331, 3%, 50%);
+}
+
 .results {
     background: hsl(331, 10%, 75%);
     position: absolute;

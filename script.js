@@ -92,7 +92,7 @@ function populateResults() {
         actingSkillsList.removeChild(actingSkillsList.lastChild);
     }
 
-    // Create and append elements
+    // Create and append skills list (checkboxes)
     if (filteredSkillsList.music.length) {
         filteredSkillsList.music.forEach(skill => {
             let listItem = document.createElement('li');
