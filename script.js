@@ -56,11 +56,15 @@ function updateSkills(event) {
 let toggleWrapper = document.querySelector('.toggle-wrapper');
 let results = document.querySelector('.results');
 
+let categoriesDiv = document.querySelector('.categories');
+
 toggleWrapper.addEventListener('focusin', showResults);
 document.addEventListener('click', hideResults);
 
 function showResults() {
     results.style.display = 'block';
+    // Set scroll position to top = 0
+    categoriesDiv.scrollTop = 0;
 }
 
 function hideResults(event) {
@@ -160,4 +164,12 @@ for(let button of categoryBtns) {
             arrow.innerText = '▼';
         }
     });
+}
+
+// Add skill to list
+let addBtn = document.querySelector('.add-btn');
+addBtn.addEventListener('click', addSkillToList);
+
+function addSkillToList() {
+    
 }
