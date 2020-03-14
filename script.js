@@ -33,21 +33,27 @@ for(let item of skillsListData.acting) {
     actingList.appendChild(listItem);
 }
 
-// Search / Add skill
+// Search skills
 let filteredSkillsList = {
     music: [...skillsListData.music],
     dancing: [...skillsListData.dancing],
     acting: [...skillsListData.acting]
 };
+let isExact = false;
 
-let input = document.querySelector('.input');
+let input = document.querySelector('.input input');
+input.value = '';
 input.addEventListener('input', updateSkills);
 
 function updateSkills(event) {
+    isExact = false;
     filteredSkillsList = {};
     for(let category in skillsListData) {
         let filteredCategory = skillsListData[category].filter(skill => skill.toLowerCase().includes(event.target.value.toLowerCase()));
-        filteredSkillsList = { ...filteredSkillsList, [category]: filteredCategory }
+        filteredSkillsList = { ...filteredSkillsList, [category]: filteredCategory };
+        for(let skill of skillsListData[category]) {
+            isExact = skill.toLowerCase() === event.target.value.toLowerCase() ? true : isExact;
+        }
     }
     populateResults();
 }
@@ -167,9 +173,21 @@ for(let button of categoryBtns) {
 }
 
 // Add skill to list
+let toggleContentWrappers = document.getElementsByClassName('toggle-content');
+let categoryBtnsArrows = document.getElementsByClassName('arrow');
+let pickCategoryInfo = document.querySelector('.pick-category');
 let addBtn = document.querySelector('.add-btn');
 addBtn.addEventListener('click', addSkillToList);
 
 function addSkillToList() {
-    
+    if(!isExact) {
+        pickCategoryInfo.classList.remove('hidden');
+        input.disabled = true;
+        for(let toggleContentWrapper of toggleContentWrappers) {
+            toggleContentWrapper.classList.add('hidden');
+        }
+        for(let categoryBtnArrow of categoryBtnsArrows) {
+            categoryBtnArrow.classList.add('hidden');
+        }
+    }
 }
