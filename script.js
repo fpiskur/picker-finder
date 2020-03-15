@@ -1,8 +1,7 @@
-let skillsListData = {
-    music: ['guitar', 'drums', 'vocals', 'triangle'],
-    dancing: ['salsa', 'tango', 'waltz', 'cha cha', 'samba'],
-    acting: ['action', 'comedy', 'drama']
-};
+import { skillsListData } from './modules/db.js';
+import { populateChosenSkills } from './modules/populateChosenSkills.js';
+import { isExactTerm, filteredSkillsList, input } from './modules/search.js';
+import { populateResults } from './modules/populateResults.js';
 
 let chosenSkills = {
     music: [],
@@ -10,53 +9,31 @@ let chosenSkills = {
     acting: []
 };
 
-// Populate chosen skills list
-let musicList = document.querySelector('.music-list');
-let dancingList = document.querySelector('.dancing-list');
-let actingList = document.querySelector('.acting-list');
+populateChosenSkills(skillsListData);
 
-for(let item of skillsListData.music) {
-    let listItem = document.createElement('li');
-    listItem.innerText = item;
-    musicList.appendChild(listItem);
-}
+// // Search skills
+// let filteredSkillsList = {
+//     music: [...skillsListData.music],
+//     dancing: [...skillsListData.dancing],
+//     acting: [...skillsListData.acting]
+// };
 
-for(let item of skillsListData.dancing) {
-    let listItem = document.createElement('li');
-    listItem.innerText = item;
-    dancingList.appendChild(listItem);
-}
+// let input = document.querySelector('.input input');
+// input.value = '';
+// input.addEventListener('input', (event) => updateSkillsResults(event, isExactTerm));
 
-for(let item of skillsListData.acting) {
-    let listItem = document.createElement('li');
-    listItem.innerText = item;
-    actingList.appendChild(listItem);
-}
-
-// Search skills
-let filteredSkillsList = {
-    music: [...skillsListData.music],
-    dancing: [...skillsListData.dancing],
-    acting: [...skillsListData.acting]
-};
-let isExact = false;
-
-let input = document.querySelector('.input input');
-input.value = '';
-input.addEventListener('input', updateSkills);
-
-function updateSkills(event) {
-    isExact = false;
-    filteredSkillsList = {};
-    for(let category in skillsListData) {
-        let filteredCategory = skillsListData[category].filter(skill => skill.toLowerCase().includes(event.target.value.toLowerCase()));
-        filteredSkillsList = { ...filteredSkillsList, [category]: filteredCategory };
-        for(let skill of skillsListData[category]) {
-            isExact = skill.toLowerCase() === event.target.value.toLowerCase() ? true : isExact;
-        }
-    }
-    populateResults();
-}
+// function updateSkillsResults(event, isExactTerm) {
+//     isExactTerm = false;
+//     filteredSkillsList = {};
+//     for(let category in skillsListData) {
+//         let filteredCategory = skillsListData[category].filter(skill => skill.toLowerCase().includes(event.target.value.toLowerCase()));
+//         filteredSkillsList = { ...filteredSkillsList, [category]: filteredCategory };
+//         for(let skill of skillsListData[category]) {
+//             isExactTerm = skill.toLowerCase() === event.target.value.toLowerCase() ? true : isExactTerm;
+//         }
+//     }
+//     populateResults();
+// }
 
 // Show / Hide Results
 let toggleWrapper = document.querySelector('.toggle-wrapper');
@@ -84,76 +61,76 @@ function hideResults(event) {
 // let dancingBtn = document.getElementById('dancing-cat-btn');
 // let actingBtn = document.getElementById('acting-cat-btn');
 
-let musicSkillsList = document.querySelector('.music-skills-list');
-let dancingSkillsList = document.querySelector('.dancing-skills-list');
-let actingSkillsList = document.querySelector('.acting-skills-list');
+// let musicSkillsList = document.querySelector('.music-skills-list');
+// let dancingSkillsList = document.querySelector('.dancing-skills-list');
+// let actingSkillsList = document.querySelector('.acting-skills-list');
 
-populateResults();
+populateResults(filteredSkillsList);
 
-function populateResults() {
-    // Clear lists
-    while(musicSkillsList.firstChild) {
-        musicSkillsList.removeChild(musicSkillsList.lastChild);
-    }
-    while(dancingSkillsList.firstChild) {
-        dancingSkillsList.removeChild(dancingSkillsList.lastChild);
-    }
-    while(actingSkillsList.firstChild) {
-        actingSkillsList.removeChild(actingSkillsList.lastChild);
-    }
+// function populateResults() {
+//     // Clear lists
+//     while(musicSkillsList.firstChild) {
+//         musicSkillsList.removeChild(musicSkillsList.lastChild);
+//     }
+//     while(dancingSkillsList.firstChild) {
+//         dancingSkillsList.removeChild(dancingSkillsList.lastChild);
+//     }
+//     while(actingSkillsList.firstChild) {
+//         actingSkillsList.removeChild(actingSkillsList.lastChild);
+//     }
 
-    // Create and append skills list (checkboxes)
-    if (filteredSkillsList.music.length) {
-        filteredSkillsList.music.forEach(skill => {
-            let listItem = document.createElement('li');
-            let listItemInput = document.createElement('input');
-            listItemInput.type = 'checkbox';
-            let listItemLabel = document.createElement('label');
+//     // Create and append skills list (checkboxes)
+//     if (filteredSkillsList.music.length) {
+//         filteredSkillsList.music.forEach(skill => {
+//             let listItem = document.createElement('li');
+//             let listItemInput = document.createElement('input');
+//             listItemInput.type = 'checkbox';
+//             let listItemLabel = document.createElement('label');
     
-            listItemInput.id = skill;
-            listItemInput.name = skill;
-            listItemLabel.htmlFor = skill;
-            listItemLabel.innerText = ' ' + skill;
-            listItem.appendChild(listItemInput);
-            listItem.appendChild(listItemLabel);
-            musicSkillsList.appendChild(listItem);
-        });
-    }
+//             listItemInput.id = skill;
+//             listItemInput.name = skill;
+//             listItemLabel.htmlFor = skill;
+//             listItemLabel.innerText = ' ' + skill;
+//             listItem.appendChild(listItemInput);
+//             listItem.appendChild(listItemLabel);
+//             musicSkillsList.appendChild(listItem);
+//         });
+//     }
     
-    if (filteredSkillsList.dancing.length) {
-        filteredSkillsList.dancing.forEach(skill => {
-            let listItem = document.createElement('li');
-            let listItemInput = document.createElement('input');
-            listItemInput.type = 'checkbox';
-            let listItemLabel = document.createElement('label');
+//     if (filteredSkillsList.dancing.length) {
+//         filteredSkillsList.dancing.forEach(skill => {
+//             let listItem = document.createElement('li');
+//             let listItemInput = document.createElement('input');
+//             listItemInput.type = 'checkbox';
+//             let listItemLabel = document.createElement('label');
     
-            listItemInput.id = skill;
-            listItemInput.name = skill;
-            listItemLabel.htmlFor = skill;
-            listItemLabel.innerText = ' ' + skill;
-            listItem.appendChild(listItemInput);
-            listItem.appendChild(listItemLabel);
-            dancingSkillsList.appendChild(listItem);
-        });
-    }
+//             listItemInput.id = skill;
+//             listItemInput.name = skill;
+//             listItemLabel.htmlFor = skill;
+//             listItemLabel.innerText = ' ' + skill;
+//             listItem.appendChild(listItemInput);
+//             listItem.appendChild(listItemLabel);
+//             dancingSkillsList.appendChild(listItem);
+//         });
+//     }
     
-    if (filteredSkillsList.acting.length) {
-        filteredSkillsList.acting.forEach(skill => {
-            let listItem = document.createElement('li');
-            let listItemInput = document.createElement('input');
-            listItemInput.type = 'checkbox';
-            let listItemLabel = document.createElement('label');
+//     if (filteredSkillsList.acting.length) {
+//         filteredSkillsList.acting.forEach(skill => {
+//             let listItem = document.createElement('li');
+//             let listItemInput = document.createElement('input');
+//             listItemInput.type = 'checkbox';
+//             let listItemLabel = document.createElement('label');
     
-            listItemInput.id = skill;
-            listItemInput.name = skill;
-            listItemLabel.htmlFor = skill;
-            listItemLabel.innerText = ' ' + skill;
-            listItem.appendChild(listItemInput);
-            listItem.appendChild(listItemLabel);
-            actingSkillsList.appendChild(listItem);
-        });
-    }
-}
+//             listItemInput.id = skill;
+//             listItemInput.name = skill;
+//             listItemLabel.htmlFor = skill;
+//             listItemLabel.innerText = ' ' + skill;
+//             listItem.appendChild(listItemInput);
+//             listItem.appendChild(listItemLabel);
+//             actingSkillsList.appendChild(listItem);
+//         });
+//     }
+// }
 
 // Show / Hide category in results
 let categoryBtns = document.getElementsByClassName('toggle-btn');
@@ -180,14 +157,16 @@ let addBtn = document.querySelector('.add-btn');
 addBtn.addEventListener('click', addSkillToList);
 
 function addSkillToList() {
-    if(!isExact) {
-        pickCategoryInfo.classList.remove('hidden');
-        input.disabled = true;
-        for(let toggleContentWrapper of toggleContentWrappers) {
-            toggleContentWrapper.classList.add('hidden');
-        }
-        for(let categoryBtnArrow of categoryBtnsArrows) {
-            categoryBtnArrow.classList.add('hidden');
+    if(input.value) {
+        if(!isExactTerm) {
+            pickCategoryInfo.classList.remove('hidden');
+            input.disabled = true;
+            for(let toggleContentWrapper of toggleContentWrappers) {
+                toggleContentWrapper.classList.add('hidden');
+            }
+            for(let categoryBtnArrow of categoryBtnsArrows) {
+                categoryBtnArrow.classList.add('hidden');
+            }
         }
     }
 }
